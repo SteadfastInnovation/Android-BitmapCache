@@ -1,6 +1,10 @@
 #Android generated
 bin
 gen
+build
+
+# Gradle cache
+.gradle/
 
 #Eclipse
 .project
