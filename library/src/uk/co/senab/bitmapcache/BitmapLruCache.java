@@ -24,6 +24,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.FileObserver;
 import android.os.Looper;
 import android.os.Process;
 import android.util.Log;
@@ -157,6 +158,8 @@ public class BitmapLruCache {
     private ScheduledThreadPoolExecutor mDiskCacheFlusherExecutor;
 
     private DiskCacheFlushRunnable mDiskCacheFlusherRunnable;
+
+    private FileObserver mFileObserver;
 
     // Transient
     private ScheduledFuture<?> mDiskCacheFuture;
@@ -518,6 +521,29 @@ public class BitmapLruCache {
             mDiskCacheEditLocks = new HashMap<String, ReentrantLock>();
             mDiskCacheFlusherExecutor = new ScheduledThreadPoolExecutor(1);
             mDiskCacheFlusherRunnable = new DiskCacheFlushRunnable(diskCache);
+
+            String cacheDirParent = mDiskCache.getDirectory().getParent();
+            final String cacheDirName = mDiskCache.getDirectory().getName();
+            mFileObserver = new FileObserver(cacheDirParent, FileObserver.DELETE) {
+                @Override
+                public void onEvent(int event, String path) {
+                    //Log.d("Test", String.format("FileObserver event 0x%08x %s", event, path));
+                    if (cacheDirName.equals(path) && ((FileObserver.DELETE & event) != 0)) {
+                        //Log.d("Test", "Deleted " + cacheDirName);
+                        try {
+                            mDiskCache.close();
+                        } catch (IOException e) {
+                            //Log.e("Test", "Error", e);
+                        }
+                        mDiskCache = null;
+                        mDiskCacheEditLocks = null;
+                        mDiskCacheFlusherExecutor = null;
+                        mDiskCacheFlusherRunnable = null;
+                        mFileObserver.stopWatching();
+                    }
+                }
+            };
+            mFileObserver.startWatching();
         }
     }
 
