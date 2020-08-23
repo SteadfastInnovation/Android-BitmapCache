@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 16
+    compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 4
-        targetSdkVersion 14
+        minSdkVersion 14
+        targetSdkVersion 29
         versionCode 2300
         versionName "2.3"
     }
@@ -34,6 +34,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:support-v4:22.1.1'
+    implementation 'androidx.collection:collection:1.1.0'
     implementation 'com.jakewharton:disklrucache:2.0.2'
 }

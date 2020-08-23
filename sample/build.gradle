@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 16
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "uk.co.senab.bitmapcache.samples"
-        minSdkVersion 4
-        targetSdkVersion 14
+        minSdkVersion 14
+        targetSdkVersion 29
         versionCode 2300
         versionName "2.3"
     }
@@ -36,4 +36,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
+    implementation 'androidx.viewpager:viewpager:1.0.0'
 }

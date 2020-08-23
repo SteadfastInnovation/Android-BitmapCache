@@ -16,7 +16,8 @@
 package uk.co.senab.bitmapcache;
 
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
+
+import androidx.collection.LruCache;
 
 import java.lang.ref.SoftReference;
 import java.util.Collections;
