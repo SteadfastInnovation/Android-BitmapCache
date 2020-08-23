@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 16
-    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 4
@@ -34,7 +33,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:22.1.1'
-    compile 'com.jakewharton:disklrucache:2.0.2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:support-v4:22.1.1'
+    implementation 'com.jakewharton:disklrucache:2.0.2'
 }
